@@ -30,7 +30,6 @@ Para comenzar a trabajar con este proyecto en C para STM32, es necesario instala
 ### 3. **Doxygen**
 
 - Descarga e instala Doxygen desde: [https://www.doxygen.nl/download.html](https://www.doxygen.nl/download.html)
-
 - Agrega Doxygen al PATH del sistema para poder ejecutarlo desde la terminal.
 - En VS Code se puede utilizar la extensión:
   Doxygen Documentation Generator — desarrollada por Christoph Schlosser, que facilita la creación de comentarios compatibles con Doxygen.
@@ -38,14 +37,49 @@ Para comenzar a trabajar con este proyecto en C para STM32, es necesario instala
 ---
 
 ### 4. **Ceedling**
+Para realizar testing unitario se utiliza la herramienta Ceedling.
+Esta no está disponible directamente en Windows, pero puede instalarse fácilmente a través de WSL (Ubuntu).
+
+Instalación:
+
+Ejecuta los siguientes comandos dentro de la terminal de WSL:
+- Instalación de Ruby (requerido por Ceedling) y Gcovr (para reportes de cobertura)
+
+  sudo apt-get install ruby gcovr
+
+- Instalación de Ceedling mediante RubyGems
+
+  sudo gem install ceedling
+
+Dentro del repositorio, puedes crear un nuevo proyecto de Ceedling de dos formas:
+- Crear un proyecto en una nueva carpeta:
+
+  ceedling new "nombre_carpeta"
+
+- Crear el proyecto en la carpeta actual:
+
+  ceedling new .
+
+Estos comandos generan automáticamente las carpetas y archivos por defecto:
+
+  src/
+
+  test/support/
+
+  project.yml
+
+Nota importante: en este repositorio ya existe el archivo project.yml, por lo que no es necesario crear un nuevo proyecto Ceedling. Simplemente coloca tus archivos de prueba dentro de la carpeta test/ — no deben crearse en otra ubicación. Tambien es importante revisar que dentro de la carpeta support se cree un archivo llamado .gitkeep (este archivo queda vacio), esto para que la carpeta test se guarde en el repo.
 
 ---
 
 ## Uso del repositorio
 
-Este repositorio utiliza [pre-commit](https://pre-commit.com) para validaciones de formato. Para trabajar con el mismo usted debería tener instalado:
+Este repositorio utiliza las siguientes herramientas:
 
-1. pre-commit (https://pre-commit.com/#install)
+1. [clang-format](https://clang.llvm.org/docs/ClangFormat.html) para el mantenimiento de formato del código escrito en lenguaje C
+2. [pre-commit](https://pre-commit.com) para validaciones generales de formato del repositorio
+3. [ceedling](https://www.throwtheswitch.org/ceedling) para ejecutar las pruebas unitarias en forma automatizada
+4. [lcov]() para generar los informes de cobertura de las pruebas unitarias
 
 Después de clonar el repositorio usted debería ejecutar el siguiente comando:
 
@@ -53,9 +87,23 @@ Después de clonar el repositorio usted debería ejecutar el siguiente comando:
 pre-commit install
 ```
 
+Para ejecutar las pruebas unitarias se utiliza el siguiente comando:
+
+```
+ceedling test:all
+```
+
+Para generar el informe de cobertura de las pruebas se utiliza el siguiente comando:
+
+```
+ceedling clobber gcov:all
+```
+
 Para generar la documentación del proyecto se utiliza el siguiente comando:
 
 ```
 doxygen doxyfile
+
 ```
-Nota: Los archivos HTML resultantes se encontrarán dentro del directorio configurado en el archivo doxyfile (por ejemplo: build/doc/html/index.html).
+
+Nota: Los reportes de cobertura por defecto se guardan en la carpeta build/artifacts/gcov/gcovr/GcovCoverageCobertura.html y los reportes de test se guardan en la carpeta build/artifacts/gcov/junit_tests_report.html. La documentacion con doxygen se guarda en la carpeta build/doc/html/index.html.
