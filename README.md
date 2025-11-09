@@ -68,7 +68,7 @@ Estos comandos generan automáticamente las carpetas y archivos por defecto:
 
   project.yml
 
-Nota importante: en este repositorio ya existe el archivo project.yml, por lo que no es necesario crear un nuevo proyecto Ceedling. Simplemente coloca tus archivos de prueba dentro de la carpeta test/ — no deben crearse en otra ubicación.
+Nota importante: en este repositorio ya existe el archivo project.yml, por lo que no es necesario crear un nuevo proyecto Ceedling. Simplemente coloca tus archivos de prueba dentro de la carpeta test/ — no deben crearse en otra ubicación. Tambien es importante revisar que dentro de la carpeta support se cree un archivo llamado .gitkeep (este archivo queda vacio), esto para que la carpeta test se guarde en el repo.
 
 ---
 
